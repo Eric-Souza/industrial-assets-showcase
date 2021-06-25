@@ -6,12 +6,12 @@ import Header from '../Header'
 import Body from '../Body'
 import Footer from '../Footer'
 
-const MainPage: React.FC = () => (
+const CompaniesPage: React.FC = () => (
   <Container>
-    <Header />
+    <Header subtitle="Empresas" />
     <Body />
     <Footer />
   </Container>
 )
 
-export default MainPage
+export default CompaniesPage
