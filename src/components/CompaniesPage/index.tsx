@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Container } from './styles'
 
 import Header from '../Header'
-import Body from '../Body'
 import Footer from '../Footer'
 
-const CompaniesPage: React.FC = () => (
-  <Container>
-    <Header subtitle="Empresas" />
-    <Body />
-    <Footer />
-  </Container>
-)
+import { getCompanies } from '../../api/services/companiesService'
+
+const CompaniesPage: React.FC = () => {
+  const getAllCompanies = async () => {
+    const companies = await getCompanies()
+    console.log('All companies:', companies.data)
+  }
+
+  useEffect(() => {
+    getAllCompanies()
+  }, [])
+
+  return (
+    <Container>
+      <Header subtitle="Empresas" />
+      Empresas
+      <Footer />
+    </Container>
+  )
+}
 
 export default CompaniesPage

@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Container } from './styles'
 
 import Header from '../Header'
-import Body from '../Body'
 import Footer from '../Footer'
 
-const AssetsPage: React.FC = () => (
-  <Container>
-    <Header subtitle="Ativos" />
-    <Body />
-    <Footer />
-  </Container>
-)
+import { getAssets } from '../../api/services/assetsService'
+
+const AssetsPage: React.FC = () => {
+  const getAllAssets = async () => {
+    const assets = await getAssets()
+    console.log('All assets:', assets.data)
+  }
+
+  useEffect(() => {
+    getAllAssets()
+  }, [])
+
+  return (
+    <Container>
+      <Header subtitle="Ativos" />
+      Ativos
+      <Footer />
+    </Container>
+  )
+}
 
 export default AssetsPage

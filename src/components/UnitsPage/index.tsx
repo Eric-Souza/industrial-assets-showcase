@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Container } from './styles'
 
 import Header from '../Header'
-import Body from '../Body'
 import Footer from '../Footer'
 
-const UnitsPage: React.FC = () => (
-  <Container>
-    <Header subtitle="Unidades" />
-    <Body />
-    <Footer />
-  </Container>
-)
+import { getUnits } from '../../api/services/unitsService'
+
+const UnitsPage: React.FC = () => {
+  const getAllUnits = async () => {
+    const units = await getUnits()
+    console.log('All units:', units.data)
+  }
+
+  useEffect(() => {
+    getAllUnits()
+  }, [])
+
+  return (
+    <Container>
+      <Header subtitle="Unidades" />
+      Unidades
+      <Footer />
+    </Container>
+  )
+}
 
 export default UnitsPage
