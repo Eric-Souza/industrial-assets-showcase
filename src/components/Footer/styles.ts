@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-    position: absolute;
+    position: sticky;
     width: 100%;
-    height: 8%;
+    height: 60px;
 
     background-color: white;
 
@@ -13,8 +13,10 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    border-top: 2px solid black;
-    box-shadow: 1px 1px 1px black, 0 0 1px black, 0 0 1px black;
+    -webkit-box-shadow: 0px 0px 9px 3px rgba(41,41,41,.25);
+    -moz-box-shadow: 0px 0px 9px 3px rgba(41,41,41,.25);
+    
+    box-shadow: 0px 0px 9px 3px rgba(41,41,41,.25);
     
     padding: 5px 20px;
 `

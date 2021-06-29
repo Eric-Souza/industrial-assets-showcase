@@ -1,10 +1,6 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  .card {
-    display: flex;
-    margin: 20px;
-
-    max-width: 300px;
-  }
+  margin: 30px 100px;
+  justify-content: center;
 `

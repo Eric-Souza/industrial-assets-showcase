@@ -7,7 +7,7 @@ import Footer from '../Footer'
 
 import { getUnits } from '../../api/services/unitsService'
 
-const UnitsPage: React.FC = () => {
+const UnitsPage = () => {
   const getAllUnits = async () => {
     const units = await getUnits()
     console.log('All units:', units.data)

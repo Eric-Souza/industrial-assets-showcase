@@ -7,7 +7,7 @@ import Footer from '../Footer'
 
 import { getCompanies } from '../../api/services/companiesService'
 
-const CompaniesPage: React.FC = () => {
+const CompaniesPage = () => {
   const getAllCompanies = async () => {
     const companies = await getCompanies()
     console.log('All companies:', companies.data)

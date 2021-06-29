@@ -7,7 +7,7 @@ import Footer from '../Footer'
 
 import { getUsers } from '../../api/services/userService'
 
-const UsersPage: React.FC = () => {
+const UsersPage = () => {
   const getAllUsers = async () => {
     const users = await getUsers()
     console.log('All users:', users.data)
