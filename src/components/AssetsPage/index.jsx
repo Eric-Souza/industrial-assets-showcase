@@ -14,6 +14,9 @@ import { getAssets } from '../../api/services/assetsService'
 
 const { Meta } = Card
 
+let assetStatus = ''
+let assetCompany = ''
+
 const AssetsPage = () => {
   const [allAssets, setAllAssets] = useState([])
   const [isLoading, setLoading] = useState(true)
@@ -38,15 +41,83 @@ const AssetsPage = () => {
             <Header subtitle="Ativos" />
 
             <Body>
-              {allAssets.map((asset) => (
-                <Card
-                  className="card"
-                  hoverable
-                  cover={<img alt="example" src={asset.image} />}
-                >
-                  <Meta title={asset.name} description={asset.model === 'fan' ? 'Ventilador' : 'Motor'} />
-                </Card>
-              ))}
+              {allAssets.map((asset) => {
+                if (asset.companyId === 1) assetCompany = 'empresa teste'
+
+                if (asset.status === 'inOperation') assetStatus = 'em operação'
+                if (asset.status === 'inAlert') assetStatus = 'em alerta'
+                if (asset.status === 'inDowntime') assetStatus = 'inativa'
+
+                return (
+                  <Card
+                    key={asset.id}
+                    className="card"
+                    hoverable
+                    cover={<img alt="example" src={asset.image} />}
+                  >
+                    <Meta title={asset.name} description={asset.model === 'fan' ? 'Ventilador' : 'Motor'} />
+
+                    <div>
+                      <br />
+
+                      Identificador:
+                      {' '}
+                      {asset.id}
+
+                      <br />
+
+                      Responsável:
+                      {' '}
+                      {assetCompany}
+
+                      <br />
+
+                      Status:
+                      {' '}
+                      {assetStatus}
+
+                      <br />
+
+                      Sensor:
+                      {' '}
+                      {asset.sensors.map((sensor) => <span>{sensor}</span>)}
+
+                      <br />
+
+                      {asset.specifications.maxTemp ? (
+                        <div>
+                          Temperatura máxima:
+                          {' '}
+                          {asset.specifications.maxTemp}
+                          <br />
+                        </div>
+                      )
+                        : ''}
+
+                      {asset.specifications.rpm ? (
+                        <div>
+                          Rotações por minuto:
+                          {' '}
+                          {asset.specifications.rpm}
+
+                          <br />
+                        </div>
+                      )
+                        : ''}
+
+                      {asset.specifications.rpm ? (
+                        <div>
+                          Potência:
+                          {' '}
+                          {asset.specifications.power}
+                        </div>
+                      )
+                        : ''}
+
+                    </div>
+                  </Card>
+                )
+              })}
             </Body>
 
             <Footer />
