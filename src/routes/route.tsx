@@ -5,18 +5,12 @@ import {
   Redirect, BrowserRouter, Switch, Route,
 } from 'react-router-dom'
 
-import AssetsPage from '../components/AssetsPage'
-import CompaniesPage from '../components/CompaniesPage'
-import UnitsPage from '../components/UnitsPage'
-import UsersPage from '../components/UsersPage'
+import MainPage from '../components/pages/MainPage'
 
 export const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/assets" component={AssetsPage} />
-      <Route exact path="/users" component={UsersPage} />
-      <Route exact path="/units" component={UnitsPage} />
-      <Route exact path="/companies" component={CompaniesPage} />
+      <Route exact path="/assets" component={MainPage} />
 
       <Redirect from="*" to="/assets" />
     </Switch>

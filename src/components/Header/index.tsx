@@ -1,15 +1,38 @@
-/* eslint-disable no-return-assign */
 import React from 'react'
 
 // Ant Design imports
 import 'antd/dist/antd.css'
-import { PageHeader, Button } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
+import {
+  PageHeader, Menu, Button, Dropdown,
+} from 'antd'
 
 import { Container } from './styles'
 
 interface Props {
   subtitle: string,
 }
+
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item icon={<DownOutlined />} disabled>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+        2nd menu item (disabled)
+      </a>
+    </Menu.Item>
+    <Menu.Item disabled>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+        3rd menu item (disabled)
+      </a>
+    </Menu.Item>
+    <Menu.Item danger>a danger item</Menu.Item>
+  </Menu>
+)
 
 const Header: React.FC <Props> = ({ subtitle }) => (
   <Container>
@@ -19,36 +42,17 @@ const Header: React.FC <Props> = ({ subtitle }) => (
       subTitle={subtitle}
       extra={[
         <Button
-          disabled={subtitle === 'Ativos'}
-          key="4"
+          key="1"
           onClick={() => window.location.href = '/assets'}
         >
           Ativos
         </Button>,
 
-        <Button
-          disabled={subtitle === 'Usuários'}
-          key="3"
-          onClick={() => window.location.href = '/users'}
-        >
-          Usuários
-        </Button>,
-
-        <Button
-          disabled={subtitle === 'Unidades'}
-          key="2"
-          onClick={() => window.location.href = '/units'}
-        >
-          Unidades
-        </Button>,
-
-        <Button
-          disabled={subtitle === 'Empresas'}
-          key="1"
-          onClick={() => window.location.href = '/companies'}
-        >
-          Empresas
-        </Button>,
+        <Dropdown overlay={menu}>
+          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+            Mais recursos <DownOutlined />
+          </a>
+        </Dropdown>,
       ]}
     />
   </Container>
