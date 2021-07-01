@@ -7,7 +7,7 @@ import { Card } from 'antd'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
-import { Container } from './styles'
+import { Container, CardData } from './styles'
 
 const { Meta } = Card
 
@@ -23,14 +23,14 @@ const Body = ({
   assetsLastUptimeSeconds,
   assetCollectsUptime,
   assetTotalUptime,
-  options,
 }) => (
   <Container>
     {allAssets.map((asset) => {
       if (asset.status === 'inOperation') assetStatus = 'em operação'
       if (asset.status === 'inAlert') assetStatus = 'em alerta'
-      if (asset.status === 'inDowntime') assetStatus = 'inativa'
+      if (asset.status === 'inDowntime') assetStatus = 'inativo'
 
+      // Date and time formatting
       const formattedDate = asset.metrics.lastUptimeAt.split('T').splice(0, 1).toString()
       const formattedTime = asset.metrics.lastUptimeAt.split('T').splice(1, 1).toString().split('.').splice(0, 1).toString()
 
@@ -41,6 +41,40 @@ const Body = ({
       assetLastUptimeMinute = formattedTime.split(':').splice(1, 1)
       assetsLastUptimeSeconds = formattedTime.split(':').splice(2, 1)
 
+      let assetColor = ''
+
+      if (asset.healthscore < 60) assetColor = '#ff2c2c'
+      if (asset.healthscore >= 60 && asset.healthscore < 75) assetColor = '#ffd900'
+      if (asset.healthscore >= 75) assetColor = '#2a8d3a'
+
+      // Highcharts config
+      const chartOptions = {
+        title: {
+          text: `${asset.name} Healthscore`,
+        },
+
+        series: [{
+          name: 'Clique para sumir',
+          type: 'column',
+          data: [asset.healthscore],
+        }],
+
+        yAxis: {
+          min: 0,
+          max: 100,
+          title: {
+            text: 'healthscore (%)',
+          },
+        },
+
+        xAxis: {
+          categories: [`${asset.name}`],
+          title: { text: `${asset.healthscore}%` },
+        },
+
+        colors: [`${assetColor}`],
+      }
+
       return (
         <Card
           key={asset.id}
@@ -50,84 +84,109 @@ const Body = ({
         >
           <Meta title={asset.name} description={asset.model === 'fan' ? 'Ventilador' : 'Motor'} />
 
-          <div>
-            <br />
+          <CardData>
+            <div className="assetOwners">
+              Identificador: {' '} {asset.id}
+              <br />
 
-            Identificador: {' '} {asset.id}
+              Status: {' '}
+              {assetStatus}
+              <br />
 
-            <br />
+              Empresa responsável: {' '}
+              {allCompanies.map((company) => {
+                if (asset.companyId === company.id) return <span className="lowercaseName">{company.name}</span>
 
-            Responsável: {' '}
-            {allCompanies.map((company) => {
-              if (asset.companyId === company.id) return <span className="companyName">{company.name}</span>
+                return <span>empresa desconhecida</span>
+              })}
+              <br />
 
-              return <span>empresa desconhecida</span>
-            })}
+              Unidade responsável: {' '}
+              <span className="lowercaseName">{asset.unitId === 1 ? 'unidade Jaguar' : 'unidade Tobias'}</span>
+              <br />
 
-            <br />
+            </div>
 
-            Status: {' '}
-            {assetStatus}
+            <div className="assetSpecs">
+              <h4>Especificações</h4>
 
-            <br />
+              Sensor: {' '}
+              {asset.sensors.map((sensor) => <span>{sensor}</span>)}
+              <br />
 
-            Sensor: {' '}
-            {asset.sensors.map((sensor) => <span>{sensor}</span>)}
+              {asset.specifications.maxTemp ? (
+                <span>
+                  Temperatura máxima: {' '}
+                  {asset.specifications.maxTemp} °C
+                </span>
+              )
+                : (
+                  <span>
+                    Temperatura máxima: {' '}
+                    não informada
+                  </span>
+                )}
+              <br />
 
-            <br />
+              {asset.specifications.rpm ? (
+                <span>
+                  Rotações por minuto: {' '}
+                  {asset.specifications.rpm} RPM
 
-            {asset.specifications.maxTemp ? (
-              <div>
-                Temperatura máxima: {' '}
-                {asset.specifications.maxTemp}
-                <br />
-              </div>
-            )
-              : ''}
+                </span>
+              )
+                : (
+                  <span>
+                    Rotações por minuto: {' '}
+                    não informado
+                  </span>
+                )}
+              <br />
 
-            {asset.specifications.rpm ? (
-              <div>
-                Rotações por minuto: {' '}
-                {asset.specifications.rpm}
+              {asset.specifications.rpm ? (
+                <span>
+                  Potência: {' '}
+                  {asset.specifications.power} Watts
+                </span>
+              )
+                : (
+                  <span>
+                    Potência: {' '}
+                    não informada
+                  </span>
+                )}
+              <br />
+            </div>
 
-                <br />
-              </div>
-            )
-              : ''}
+            <div className="assetLifeCycle">
+              <h4>Ciclo de vida</h4>
 
-            {asset.specifications.rpm ? (
-              <div>
-                Potência: {' '}
-                {asset.specifications.power}
-              </div>
-            )
-              : ''}
+              Ativo por último às: {' '}
+              {assetLastUptimeHour}h, {' '} {' '}
+              {assetLastUptimeMinute}m e {' '} {' '}
+              {assetsLastUptimeSeconds}s {' '} {' '} {' '}
+              de {' '}
+              {assetLastUptimeDay}/{assetLastUptimeMonth}/{assetLastUptimeYear}
+              <br />
 
-            Ativo por último às: {' '}
-            {assetLastUptimeHour}h, {' '} {' '}
-            {assetLastUptimeMinute}m e {' '} {' '}
-            {assetsLastUptimeSeconds}s {' '} {' '} {' '}
-            de {' '}
-            {assetLastUptimeDay}/{assetLastUptimeMonth}/{assetLastUptimeYear}
+              Tempo de atividade de coleta total: {' '}
+              {assetCollectsUptime}
+              <br />
 
-            <br />
+              Tempo total ativo: {' '}
+              {assetTotalUptime}
+              <br />
 
-            Coletado por último há: {' '}
-            {assetCollectsUptime}
+            </div>
 
-            <br />
+            <div className="chart">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={chartOptions}
+              />
+            </div>
 
-            Tempo total ativo: {' '}
-            {assetTotalUptime}
-
-            <br />
-
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={options}
-            />
-
-          </div>
+          </CardData>
         </Card>
       )
     })}

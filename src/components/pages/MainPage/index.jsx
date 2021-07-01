@@ -8,7 +8,9 @@ import Header from '../../Header'
 import Body from '../../Body'
 import Footer from '../../Footer'
 
-import { getAssets, getCompanies } from '../../../api/services'
+import {
+  getAssets, getCompanies, getUnits, getUsers,
+} from '../../../api/services'
 
 // Data formatting
 const assetStatus = ''
@@ -24,21 +26,11 @@ const assetsLastUptimeSeconds = ''
 const assetCollectsUptime = ''
 const assetTotalUptime = ''
 
-// Highcharts config
-const options = {
-  title: {
-    text: 'My chart',
-  },
-
-  series: [{
-    type: 'line',
-    data: [1, 2, 3, 4, 5],
-  }],
-}
-
 const MainPage = () => {
   const [allAssets, setAllAssets] = useState([])
   const [allCompanies, setAllCompanies] = useState([])
+  const [allUnits, setAllUnits] = useState([])
+  const [allUsers, setAllUsers] = useState([])
 
   const [isLoading, setLoading] = useState(true)
 
@@ -52,6 +44,16 @@ const MainPage = () => {
     const companies = await getCompanies()
     setAllCompanies(companies.data)
     console.log('All companies:', companies.data)
+
+    // Units
+    const units = await getUnits()
+    setAllUnits(units.data)
+    console.log('All units:', units.data)
+
+    // Users
+    const users = await getUsers()
+    setAllUsers(users.data)
+    console.log('All users:', users.data)
 
     return setLoading(false)
   }
@@ -73,7 +75,13 @@ const MainPage = () => {
 
         : (
           <Container>
-            <Header subtitle="Ativos" />
+            <Header
+              subtitle="Ativos"
+              allAssets={allAssets}
+              allCompanies={allCompanies}
+              allUnits={allUnits}
+              allUsers={allUsers}
+            />
 
             <Body
               allAssets={allAssets}
@@ -88,7 +96,6 @@ const MainPage = () => {
               assetsLastUptimeSeconds={assetsLastUptimeSeconds}
               assetCollectsUptime={assetCollectsUptime}
               assetTotalUptime={assetTotalUptime}
-              options={options}
             />
 
             <Footer />
