@@ -21,8 +21,6 @@ const Body = ({
   assetLastUptimeHour,
   assetLastUptimeMinute,
   assetsLastUptimeSeconds,
-  assetCollectsUptime,
-  assetTotalUptime,
 }) => (
   <Container>
     {allAssets.map((asset) => {
@@ -41,16 +39,16 @@ const Body = ({
       assetLastUptimeMinute = formattedTime.split(':').splice(1, 1)
       assetsLastUptimeSeconds = formattedTime.split(':').splice(2, 1)
 
+      // Highcharts config
       let assetColor = ''
 
       if (asset.healthscore < 60) assetColor = '#ff2c2c'
       if (asset.healthscore >= 60 && asset.healthscore < 75) assetColor = '#ffd900'
       if (asset.healthscore >= 75) assetColor = '#2a8d3a'
 
-      // Highcharts config
       const chartOptions = {
         title: {
-          text: `${asset.name} Healthscore`,
+          text: `Saúde do ${asset.name}`,
         },
 
         series: [{
@@ -63,12 +61,12 @@ const Body = ({
           min: 0,
           max: 100,
           title: {
-            text: 'healthscore (%)',
+            text: 'Saúde (%)',
           },
         },
 
         xAxis: {
-          categories: [`${asset.name}`],
+          categories: [''],
           title: { text: `${asset.healthscore}%` },
         },
 
@@ -170,11 +168,11 @@ const Body = ({
               <br />
 
               Tempo de atividade de coleta total: {' '}
-              {assetCollectsUptime}
+              {asset.metrics.totalCollectsUptime.toFixed(2)} unidades de tempo
               <br />
 
               Tempo total ativo: {' '}
-              {assetTotalUptime}
+              {asset.metrics.totalUptime.toFixed(2)} unidades de tempo
               <br />
 
             </div>

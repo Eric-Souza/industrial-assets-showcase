@@ -39,6 +39,6 @@ export const CardData = styled.div`
     width: 400px;
     max-height: 300px;
 
-    margin-right: 50px;
+    margin-right: 70px;
   }
 `
