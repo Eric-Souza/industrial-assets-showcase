@@ -40,7 +40,7 @@ const Header = ({
                 <h3> Ativos </h3>
 
                 {allAssets.map((asset) => (
-                  <span>{asset.name}</span>
+                  <span key={asset.id}>{asset.name}</span>
                 ))}
               </DataList>
 
@@ -48,7 +48,7 @@ const Header = ({
                 <h3> Unidades </h3>
 
                 {allUnits.map((unit) => (
-                  <span>{unit.name}</span>
+                  <span key={unit.id}>{unit.name}</span>
                 ))}
               </DataList>
 
@@ -56,7 +56,7 @@ const Header = ({
                 <h3> Usuários </h3>
 
                 {allUsers.map((user) => (
-                  <span>{user.name}</span>
+                  <span key={user.id}>{user.name}</span>
                 ))}
               </DataList>
 
@@ -64,7 +64,7 @@ const Header = ({
                 <h3> Empresas </h3>
 
                 {allCompanies.map((company) => (
-                  <span>{company.name}</span>
+                  <span key={company.id}>{company.name}</span>
                 ))}
               </DataList>
             </Modal>

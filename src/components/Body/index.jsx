@@ -1,14 +1,11 @@
 import React from 'react'
 
 // Ant Design imports
-import { Card, Select } from 'antd'
+import { Card, Select, message } from 'antd'
 
 // Highcharts imports
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-
-// Toast notifications imports
-import { ToastContainer, toast } from 'react-toastify'
 
 import { Container, CardData } from './styles'
 
@@ -88,8 +85,6 @@ const Body = ({
           cover={<img alt="example" src={asset.image} />}
         >
 
-          <ToastContainer />
-
           <Meta title={asset.name} description={asset.model === 'fan' ? 'Ventilador' : 'Motor'} />
 
           <CardData>
@@ -100,7 +95,7 @@ const Body = ({
                 style={{ width: 150 }}
               >
                 {allCompanies.map((company) => (
-                  <Option value={company.name}>{company.name}</Option>
+                  <Option key={company.name} value={company.name}>{company.name}</Option>
                 ))}
               </Select>
 
@@ -110,10 +105,10 @@ const Body = ({
               <Select
                 defaultValue={asset.unitId === 1 ? 'Unidade Jaguar' : 'Unidade Tobias'}
                 style={{ width: 150 }}
-                onChange={() => toast.success('Unidade atualizada!')}
+                onChange={() => message.info('Unidade atualizada!')}
               >
                 {allUnits.map((unit) => (
-                  <Option value={unit.name}>{unit.name}</Option>
+                  <Option key={unit.name} value={unit.name}>{unit.name}</Option>
                 ))}
               </Select>
               <br />
@@ -122,10 +117,10 @@ const Body = ({
               <Select
                 defaultValue="Nenhum"
                 style={{ width: 150 }}
-                onChange={() => toast.success('Usuário atualizada!')}
+                onChange={() => message.info('Usuário atualizado!')}
               >
                 {allUsers.map((user) => (
-                  <Option value={user.name}>{user.name}</Option>
+                  <Option key={user.name} value={user.name}>{user.name}</Option>
                 ))}
               </Select>
               <br />

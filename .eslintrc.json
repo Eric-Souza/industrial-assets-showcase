@@ -48,7 +48,8 @@
         "react/prop-types": "off",
         "no-shadow": "off",
         "no-param-reassign": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "spaced-comment": "off"
     },
     "settings": {
         "import/resolver": {
