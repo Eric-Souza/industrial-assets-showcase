@@ -1,3 +1,11 @@
-# React/Typescript Linting
+# Tractian Assets Test App
 
-Base template configured with ESlint.
+App developed in React/Typescript to show Tractian's test API data.
+
+## To run locally, execute the following commands:
+
+* "npm install" to install all packages and dependencies used.
+
+* "npm start" to start the app on port 3000.
+
+The project has been deployed with Heroku, you can check it out at: https://60abb222d542bb108b65ccbb--dropbox-eric-clone.netlify.app
