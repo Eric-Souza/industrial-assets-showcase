@@ -16,8 +16,8 @@ export const Container = styled.div`
   }
 
   .card img {
-    max-width: 550px;
-    max-height: 450px;
+    max-width: 700px;
+    max-height: 600px;
   }
 `
 
@@ -30,6 +30,10 @@ export const CardData = styled.div`
     margin-top: 2px;
   }
 
+  h4 {
+    margin-top: 5px;
+  }
+
   .chart {
     position: absolute;
     top: 0;
@@ -39,6 +43,6 @@ export const CardData = styled.div`
     width: 400px;
     max-height: 300px;
 
-    margin-right: 70px;
+    margin: 70px 70px 0 0;
   }
 `

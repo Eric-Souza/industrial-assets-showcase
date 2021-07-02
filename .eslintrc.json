@@ -13,7 +13,7 @@
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 12,
+        "ecmaVersion": 2019,
         "sourceType": "module"
     },
     "plugins": [
@@ -24,7 +24,7 @@
     "rules": {
         "@typescript-eslint/no-use-before-define": ["warn"],
         "@typescript-eslint/no-shadow": ["warn"],
-        "max-len": ["warn", { "code": 140 }],
+        "max-len": ["warn", { "code": 160 }],
         "react-hooks/rules-of-hooks": "warn",
         "react-hooks/exhaustive-deps": "warn",
         "indent": ["warn", 2],

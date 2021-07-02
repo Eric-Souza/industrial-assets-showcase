@@ -1,19 +1,25 @@
 import React from 'react'
 
 // Ant Design imports
-import { Card } from 'antd'
+import { Card, Select } from 'antd'
 
 // Highcharts imports
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
+// Toast notifications imports
+import { ToastContainer, toast } from 'react-toastify'
+
 import { Container, CardData } from './styles'
 
 const { Meta } = Card
+const { Option } = Select
 
 const Body = ({
   allAssets,
   allCompanies,
+  allUnits,
+  allUsers,
   assetStatus,
   assetLastUptimeYear,
   assetLastUptimeMonth,
@@ -48,11 +54,12 @@ const Body = ({
 
       const chartOptions = {
         title: {
+          categories: [`${assetStatus}`],
           text: `Saúde do ${asset.name}`,
         },
 
         series: [{
-          name: 'Clique para sumir',
+          name: 'Saúde do ativo',
           type: 'column',
           data: [asset.healthscore],
         }],
@@ -66,7 +73,7 @@ const Body = ({
         },
 
         xAxis: {
-          categories: [''],
+          categories: [`${assetStatus}`],
           title: { text: `${asset.healthscore}%` },
         },
 
@@ -80,29 +87,57 @@ const Body = ({
           hoverable
           cover={<img alt="example" src={asset.image} />}
         >
+
+          <ToastContainer />
+
           <Meta title={asset.name} description={asset.model === 'fan' ? 'Ventilador' : 'Motor'} />
 
           <CardData>
             <div className="assetOwners">
+              Empresa responsável: {' '}
+              <Select
+                defaultValue={asset.companyId === 1 ? 'Empresa Teste' : 'Empresa Desconhecida'}
+                style={{ width: 150 }}
+              >
+                {allCompanies.map((company) => (
+                  <Option value={company.name}>{company.name}</Option>
+                ))}
+              </Select>
+
+              <br />
+
+              Unidade responsável: {' '}
+              <Select
+                defaultValue={asset.unitId === 1 ? 'Unidade Jaguar' : 'Unidade Tobias'}
+                style={{ width: 150 }}
+                onChange={() => toast.success('Unidade atualizada!')}
+              >
+                {allUnits.map((unit) => (
+                  <Option value={unit.name}>{unit.name}</Option>
+                ))}
+              </Select>
+              <br />
+
+              Usuário atribuido: {' '}
+              <Select
+                defaultValue="Nenhum"
+                style={{ width: 150 }}
+                onChange={() => toast.success('Usuário atualizada!')}
+              >
+                {allUsers.map((user) => (
+                  <Option value={user.name}>{user.name}</Option>
+                ))}
+              </Select>
+              <br />
+
+              <h4>Dados Gerais</h4>
+
               Identificador: {' '} {asset.id}
               <br />
 
               Status: {' '}
               {assetStatus}
               <br />
-
-              Empresa responsável: {' '}
-              {allCompanies.map((company) => {
-                if (asset.companyId === company.id) return <span className="lowercaseName">{company.name}</span>
-
-                return <span>empresa desconhecida</span>
-              })}
-              <br />
-
-              Unidade responsável: {' '}
-              <span className="lowercaseName">{asset.unitId === 1 ? 'unidade Jaguar' : 'unidade Tobias'}</span>
-              <br />
-
             </div>
 
             <div className="assetSpecs">

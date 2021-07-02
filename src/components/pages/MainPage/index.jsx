@@ -86,6 +86,8 @@ const MainPage = () => {
             <Body
               allAssets={allAssets}
               allCompanies={allCompanies}
+              allUnits={allUnits}
+              allUsers={allUsers}
               isLoading={isLoading}
               assetStatus={assetStatus}
               assetLastUptimeYear={assetLastUptimeYear}
