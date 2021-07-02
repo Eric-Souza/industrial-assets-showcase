@@ -8,4 +8,4 @@ App developed in React/Typescript to show Tractian's test API data.
 
 * "npm start" to start the app on port 3000.
 
-The project has been deployed with Heroku, you can check it out at: https://60abb222d542bb108b65ccbb--dropbox-eric-clone.netlify.app
+The project has been deployed with Heroku, you can check it out at: https://tractian-assets-test-app.herokuapp.com
