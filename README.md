@@ -1,6 +1,6 @@
-# Tractian Assets Test App
+# Industrial Assets Showcase (Test)
 
-App developed in React/Typescript to show Tractian's test API data.
+App developed in React/Typescript to show a test API data.
 
 ## To run locally, execute the following commands:
 
